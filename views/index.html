@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>Saasta Xender</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+</head>
+
+<body>
+    <h1>Sasta Xender</h1>
+
+    <input type="number" id="code" autocomplete="off" /> 
+    <button onclick="window.open('/'+document.getElementById('code').value)">Get File</button> 
+    <br/><br/>
+
+    <form id="uploadForm" enctype="multipart/form-data" action="/upload" method="post">
+        <input type="file" name="myfile" /><br /><br />
+        <input type="submit" value="Upload Image" name="submit"><br /><br />
+        <span id="status"></span>
+    </form>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#uploadForm').submit(function () {
+            $("#status").empty().text("File is uploading...");
+
+            $(this).ajaxSubmit({
+
+                error: function (xhr) {
+                    status('Error: ' + xhr.status);
+                },
+
+                success: function (response) {
+                    console.log(response)
+                    $("#status").empty().text(response);
+                }
+            });
+
+            return false;
+        });
+    });  
+</script>
+
+</html>
