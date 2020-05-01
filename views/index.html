@@ -2,44 +2,199 @@
 
 <head>
     <title>Saasta Xender</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <style>
+        html,
+        body {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        body {
+            -webkit-animation: background 15s cubic-bezier(1, 0, 0, 1) infinite;
+            animation: background 15s cubic-bezier(1, 0, 0, 1) infinite;
+        }
+
+
+        @-webkit-keyframes background {
+            0% {
+                background-color: #5ebf4b;
+            }
+
+            25% {
+                background-color: #34cac3;
+            }
+
+            50% {
+                background-color: #fca011;
+            }
+
+            75% {
+                background-color: #fd374f;
+            }
+
+            100% {
+                background-color: #874cbd;
+            }
+
+        }
+
+        @keyframes background {
+            0% {
+                background-color: #5ebf4b;
+            }
+
+            25% {
+                background-color: #34cac3;
+            }
+
+            50% {
+                background-color: #fca011;
+            }
+
+            75% {
+                background-color: #fd374f;
+            }
+
+            100% {
+                background-color: #874cbd;
+            }
+
+        }
+
+        body {
+            color: white;
+            font-weight: bold;
+            font-family: Verdana;
+            font-size: 20px;
+
+        }
+
+        button {
+            background-color: #333;
+            -moz-border-radius: 28px;
+            -webkit-border-radius: 28px;
+            border-radius: 2px;
+            border: 0px solid #18ab29;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-weight: bold;
+            font-size: 17px;
+            padding: 16px 31px;
+            margin: 5px;
+            text-decoration: none;
+        }
+
+        .file {
+            font-size: 20px;
+            padding: 10px;
+
+        }
+
+        button:active {
+            position: relative;
+            top: 1px;
+        }
+
+        h1 {
+
+            font-weight: bold;
+        }
+
+        .loader {
+            border: 16px solid transparent;
+            /* Light grey */
+            border-top: 16px solid #ffffff;
+            /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fileContainer {
+            overflow: hidden;
+            background-color: white;
+            color: black;
+            padding: 10px;
+            margin:10px;
+            position: relative;
+        }
+
+        .fileContainer [type=file] {
+            cursor: inherit;
+            display: block;
+            font-size: 999px;
+            filter: alpha(opacity=0);
+            min-height: 100%;
+            min-width: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            text-align: right;
+            top: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Sasta Xender</h1>
 
-    <input type="number" id="code" autocomplete="off" /> 
-    <button onclick="window.open('/'+document.getElementById('code').value)">Get File</button> 
-    <br/><br/>
+    <center>
+        <h1> File Transfer System</h1>
+        <br />
+        <input type="text" id="code" placeholder="Enter File Code" autocomplete="off" class="file" />
+        <button onclick="window.open('/'+document.getElementById('code').value)">Download File</button>
 
-    <form id="uploadForm" enctype="multipart/form-data" action="/upload" method="post">
-        <input type="file" name="myfile" /><br /><br />
-        <input type="submit" value="Upload Image" name="submit"><br /><br />
-        <span id="status"></span>
-    </form>
-</body>
+        <hr color="white" />
+        <br/>
+        <form id="uploadForm" enctype="multipart/form-data" action="/upload" method="post">
 
-<script>
-    $(document).ready(function () {
-        $('#uploadForm').submit(function () {
-            $("#status").empty().text("File is uploading...");
+            <label class="fileContainer">
+                Select File to Upload
+                <input type="file" name="myfile" />
+            </label>
+            
+            <br><br>
+            <button type="submit" value="Upload Image" name="submit">Upload File</button>
+        </form>
+        <p id="status"></p>
 
-            $(this).ajaxSubmit({
 
-                error: function (xhr) {
-                    status('Error: ' + xhr.status);
-                },
+    </center>
 
-                success: function (response) {
-                    console.log(response)
-                    $("#status").empty().text(response);
-                }
+    <script>
+        $(document).ready(function () {
+            $('#uploadForm').submit(function () {
+                $("#status").empty().text("File is uploading...");
+                $(this).ajaxSubmit({
+
+                    success: function (response) {
+                        console.log(response)
+                        $("#status").empty().text(response);
+                    }
+                });
+                return false;
             });
+        });  
+    </script>
 
-            return false;
-        });
-    });  
-</script>
+
+</body>
 
 </html>

@@ -3,8 +3,16 @@ const colors = require('colors');
 const fs = require('fs');
 const ip = require('ip');
 const multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname )
+    }
+  })
 const upload = multer({
-    "dest": "uploads/"
+    storage:storage
 })
 
 let data = require('./data.json');
@@ -22,12 +30,12 @@ app.post('/upload', upload.single('myfile'), (req, res) => {
         if (err) throw err;
         console.log('File Updated!!');
     });
-    res.send("Uploaded Successfully, Code to Acess file is : " + code);
+    res.send("File Code :" + code);
 })
 
 app.get('/:id',(req,res) => {
     try {
-        res.sendFile(__dirname+"/"+data[req.params.id]);
+        res.download(__dirname+"/"+data[req.params.id],data[req.params.id]);
     } catch (error) {
         res.send(error);
     }
