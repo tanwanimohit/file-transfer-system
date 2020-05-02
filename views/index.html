@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Saasta Xender</title>
+    <title>File Transfer System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
@@ -133,7 +133,7 @@
             background-color: white;
             color: black;
             padding: 10px;
-            margin:10px;
+            margin: 10px;
             position: relative;
         }
 
@@ -149,6 +149,8 @@
             right: 0;
             text-align: right;
             top: 0;
+            height: 1px;
+            width: 10px;
         }
     </style>
 </head>
@@ -162,14 +164,12 @@
         <button onclick="window.open('/'+document.getElementById('code').value)">Download File</button>
 
         <hr color="white" />
-        <br/>
+        <br />
         <form id="uploadForm" enctype="multipart/form-data" action="/upload" method="post">
 
-            <label class="fileContainer">
-                Select File to Upload
-                <input type="file" name="myfile" />
+            <label class="fileContainer">Select File to Upload<input type="file" name="myfile" />
             </label>
-            
+
             <br><br>
             <button type="submit" value="Upload Image" name="submit">Upload File</button>
         </form>
